@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root{
+    --common-background : #FFF2E0;
+    --common-background-two : #e6daca;
+    --button-one : #3b060a;
+    --button-two : #62383b;
+}
+
+/* 3b060a
+62383b */
