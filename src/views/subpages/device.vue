@@ -23,7 +23,15 @@
                             <td class="sm:table-cell flex flex-row py-2 pl-6 font-bold text-gray-400 uppercase text-sm">{{ item.sensorName.slice(0,3) == 'opn' ? 'Entry' : 'Exite' }}</td>
                             <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.sensorName }}</td>
                             <td class="sm:table-cell flex flex-row py-2 pl-6"> {{ getAlertIcon(item.status) }} {{ item.status == true ? 'Ok' : 'Offline' }}</td>
-                            <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.bettery }}<span class="text-xs"> % {{ getBatteryStatusEmoji(item.bettery) }}</span></td>
+                            <td class="sm:table-cell py-2 text-center">
+                                <div class="flex flex-row items-center justify-start ml-10 gap-1">
+                                    {{ item.bettery }}
+                                    <span class="text-xs flex items-center gap-1">
+                                    %
+                                    <span class="text-lg">{{ getBatteryStatusEmoji(item.bettery) }}</span>
+                                    </span>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
             </table>
@@ -50,7 +58,15 @@
                         <td class="sm:table-cell flex flex-row py-2 pl-6 font-bold text-gray-400 uppercase text-sm">{{ item.sensorName.slice(0,2) }}</td>
                         <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.sensorName }}</td>
                         <td class="sm:table-cell flex flex-row py-2 pl-6"> {{ getAlertIcon(item.status) }} {{ item.status == true ? 'Ok' : 'Offline' }} </td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.bettery }}<span class="text-xs"> % </span></td>
+                        <td class="sm:table-cell py-2 text-center">
+                            <div class="flex flex-row items-center justify-start ml-10 gap-1">
+                                {{ item.bettery }}
+                                <span class="text-xs flex items-center gap-1">
+                                %
+                                <span class="text-lg">{{ getBatteryStatusEmoji(item.bettery) }}</span>
+                                </span>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

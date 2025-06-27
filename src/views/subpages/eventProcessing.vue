@@ -9,19 +9,47 @@
             </div>
             <!-- content -->
             <table class="w-full border-collapse">
-                <thead class="sm:table-header-group hidden bg-gray-100">
+                <thead>
                     <tr class="text-left">
-                        <th class="min-w-[130] w-[130] pl-6 py-2 text-gray-400 uppercase text-sm">Time</th>
-                        <th class="min-w-[100px] w-[80px] pl-6 py-2 text-gray-400 uppercase text-sm">Tage</th>
-                        <th class="min-w-[130px] w-[500px] pl-6 py-2 text-gray-400 uppercase text-sm">Description</th>
+                    <th class="w-[130px] pl-6 py-2 text-gray-400 uppercase text-sm">Time</th>
+                    <th class="min-w-[100px] pl-6 py-2 text-gray-400 uppercase text-sm">Tag</th>
+                    <th class="min-w-[130px] pl-6 py-2 text-gray-400 uppercase text-sm">Description</th>
                     </tr>
                 </thead>
-                <tbody class="sm:table-row-group flex flex-col gap-4">
-                        <tr class="sm:table-row flex flex-col sm:even:bg-gray-50 sm:odd:bg-white bg-gray-50 hover:bg-gray-100 sm:p-0 p-4 sm:rounded-none rounded-md" 
-                            v-for="(item, index) in notification">
-                        <td class="sm:table-cell flex flex-row py-2 pl-6 font-bold text-gray-400 uppercase text-sm">{{ new Date(item.time).toLocaleString().slice(0,-2) }}</td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6"><p :class="{'border-2 border-blue-500 text-blue-500' : item.tag == 'booking', 'border-2 border-green-600 text-green-500' : item.tag == 'vehicle', 'bg-red-500' : item.tag == 'sensor',}" class="w-fit py-1 px-2 rounded-full text-xs"><i class="fi fi-rr-exclamation mr-2" v-if="item.tag == 'sensor'"></i>{{ item.tag }}</p></td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6 max-w-[100px] cursor-pointer" @click="viewAllText(item.message, index)" :id="'explanation' + index">{{ item.message.slice(0, 110) }}</td>
+
+                <tbody class="sm:table-row-group divide-y divide-gray-200">
+                    <tr 
+                    v-for="(item, index) in notification" 
+                    :key="index"
+                    class="sm:table-row block sm:even:bg-gray-50 sm:odd:bg-white bg-gray-50 hover:bg-gray-100 sm:rounded-none rounded-md sm:p-0 p-4"
+                    >
+                    <!-- Time -->
+                    <td class="sm:table-cell block py-2 pl-6 font-bold text-gray-400 uppercase text-sm">
+                        {{ new Date(item.time).toLocaleString().slice(0,-2) }}
+                    </td>
+
+                    <!-- Tag -->
+                    <td class="sm:table-cell block py-2 pl-6 pr-5">
+                        <p 
+                        :class="{
+                            'border-2 border-blue-500 text-blue-500': item.tag == 'booking',
+                            'border-2 border-green-600 text-green-500': item.tag == 'vehicle',
+                            'bg-red-500 text-white': item.tag == 'sensor'
+                        }"
+                        class="text-center py-1 rounded-full text-xs px-2"
+                        >
+                        {{ item.tag }}
+                        </p>
+                    </td>
+
+                    <!-- Description -->
+                    <td 
+                        class="sm:table-cell block py-2 pl-6 cursor-pointer max-w-[600px] truncate"
+                        @click="viewAllText(item.message, index)"
+                        :id="'explanation' + index"
+                    >
+                        {{ item.message.slice(0, 110) }}
+                    </td>
                     </tr>
                 </tbody>
             </table>

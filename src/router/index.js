@@ -4,6 +4,7 @@ import Login from '@/views/Authontication/login.vue'
 import Otp from '@/views/Authontication/otp.vue'
 import ChangePassword from '@/views/Authontication/changePassword.vue'
 import Analytics from '@/views/subpages/analitics.vue'
+import First from '@/views/subpages/first.vue'
 import Dashbord from '@/views/subpages/dashbord.vue'
 import Operation from '@/views/subpages/operation.vue'
 import Device from '@/views/subpages/device.vue'
@@ -18,6 +19,11 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       children : [
+        {
+          path: '',
+          name: '',
+          component: First,
+        },
         {
           path: 'analytics',
           name: 'analytics',

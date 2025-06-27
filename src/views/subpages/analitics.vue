@@ -3,29 +3,68 @@
   <div class="flex flex-col gap-10 px-4 md:px-8">
     <h3 class="font-black text-2xl md:text-3xl text-[var(--common-theme)]">Analytics</h3>
 
-    <div class="flex flex-col gap-6">
-        <!-- bar chart - occupancy -->
-            <div class="flex flex-col gap-6 rounded-xl shadow-md p-6 md:p-10 bg-white">
-            <div class="flex flex-row justify-between items-center">
-                <h3 class="text-lg md:text-xl font-bold text-gray-800">Occupancy Analytics</h3>
-                <div class="flex gap-4">
-                <button @click="viewMode = 'daily'" :class="{'font-bold text-green-600': viewMode === 'daily'}">Daily</button>
-                <button @click="viewMode = 'monthly'" :class="{'font-bold text-green-600': viewMode === 'monthly'}">Monthly</button>
-                </div>
-            </div>
+    <div class="flex flex-col justify-between items-center md:flex-row gap-6 w-full shadow-md p-6 rounded-md">
+      <p class="font-bold text-lg">Analytics Report &nbsp; &nbsp; &nbsp; :</p>
+      <button class="bg-gray-700 rounded-md text-white text-bold text-lg p-2 w-1/3 hover:bg-[#000000]">Export PDF</button>
+    </div>
 
-            <Bar :data="chartData" :options="chartOptions" />
+    <div class="flex flex-col md:flex-row gap-6 w-full">
+            <!-- bar chart - occupancy -->
+            <div class="flex flex-col gap-6 rounded-xl shadow-md p-10 bg-white md:flex-[2]">
+              <div class="flex flex-row justify-between items-center">
+                  <h3 class="text-lg md:text-xl font-bold text-gray-800">Occupancy Analytics</h3>
+                  <div class="flex gap-4">
+                  <button @click="viewMode = 'daily'" :class="{'font-bold text-green-600': viewMode === 'daily'}">Daily</button>
+                  <button @click="viewMode = 'monthly'" :class="{'font-bold text-green-600': viewMode === 'monthly'}">Monthly</button>
+                  </div>
+              </div>
+
+              <Bar :data="chartData" :options="chartOptions" />
             </div>
 
             <!-- pie chart - device health -->
-            <div class="flex flex-col gap-6 rounded-xl shadow-md p-6 md:p-10 bg-white">
-            <div class="max-w-sm mx-auto p-6 bg-white rounded-xl">
-                <h2 class="text-xl font-bold mb-4 text-center text-[var(--common-theme)]">Device Health Overview</h2>
-                <Pie :data="healthData" :options="chartOptionsDeviceHealth" />
+            <div class="flex flex-col gap-6 rounded-xl shadow-md p-10 bg-white md:flex-[1]">
+              <h2 class="text-lg md:text-xl font-bold text-gray-800">Device Health Overview</h2>
+              <div class="max-w-sm mx-auto p-6 bg-white rounded-xl">
+                  <Pie :data="healthData" :options="chartOptionsDeviceHealth" />
+              </div>
             </div>
-        </div>
     </div>
-    
+
+    <div class="flex md:flex-row flex-col gap-6 w-full">
+      <!-- Revenue Analytics -->
+      <div class="flex flex-col gap-6 rounded-xl shadow-md p-6 md:p-10 bg-white w-full">
+        <div class="flex flex-row justify-between items-center">
+          <h3 class="text-lg md:text-xl font-bold text-gray-800">Revenue Analytics</h3>
+          <div class="flex gap-4">
+            <button @click="viewMode = 'daily'" :class="{'font-bold text-green-600': viewMode === 'daily'}">Daily</button>
+            <button @click="viewMode = 'monthly'" :class="{'font-bold text-green-600': viewMode === 'monthly'}">Monthly</button>
+          </div>
+        </div>
+
+      <!-- Revenue Summary -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded-xl shadow-md flex flex-col items-center">
+          <p class="text-xs text-gray-400 uppercase">This {{ viewMode === 'daily' ? 'Week' : 'Month' }}</p>
+          <p class="text-xl font-bold text-green-600">Rs. 120,000</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-md flex flex-col items-center">
+          <p class="text-xs text-gray-400 uppercase">Last {{ viewMode === 'daily' ? 'Week' : 'Month' }}</p>
+          <p class="text-xl font-bold text-gray-700">Rs. 105,000</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-md flex flex-col items-center">
+          <p class="text-xs text-gray-400 uppercase">Change</p>
+          <p class="text-xl font-bold text-blue-500">+14.3%</p>
+        </div>
+      </div>
+
+      <!-- Line Chart -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-lg font-bold text-gray-600 mb-4">Revenue Trend</h3>
+        <Line :data="revenueChartData" :options="revenueChartOptions" />
+      </div>
+    </div>
+  </div>  
 
     <div></div>
   </div>
@@ -39,14 +78,14 @@ import {
   CategoryScale,
   LinearScale,
   Tooltip,
-  Title,
-  ArcElement,
-  Legend,
+  Title, PointElement,
+  ArcElement, Filler,
+  Legend, LineElement, 
 } from 'chart.js'
-import { Bar, Pie } from 'vue-chartjs'
+import { Line , Bar, Pie } from 'vue-chartjs'
 
 // Register all chart components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Title, ArcElement, Legend)
+ChartJS.register(CategoryScale, LineElement, PointElement, Filler, LinearScale, BarElement, Tooltip, Title, ArcElement, Legend)
 
 const viewMode = ref('daily')
 
@@ -149,4 +188,75 @@ const chartOptionsDeviceHealth = {
     },
   },
 }
+
+// revenue
+// Generate dynamic labels and data
+const getDailyLabelsRevenue = () => {
+  const labels = []
+  const today = new Date()
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today)
+    date.setDate(today.getDate() - i)
+    labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }))
+  }
+  return labels
+} 
+
+const getMonthlyLabelsRevenue = () => {
+  const labels = []
+  const today = new Date()
+  for (let i = 5; i >= 0; i--) {
+    const date = new Date(today)
+    date.setMonth(today.getMonth() - i)
+    labels.push(date.toLocaleDateString('en-US', { month: 'short' }))
+  }
+  return labels
+}
+
+const getRandomRevenueData = (length) => {
+  return Array.from({ length }, () => Math.floor(Math.random() * 100000) + 20000)
+}
+
+// Computed data for line chart
+const revenueChartData = computed(() => {
+  const labels = viewMode.value === 'daily' ? getDailyLabelsRevenue() : getMonthlyLabelsRevenue()
+  const data = getRandomRevenueData(labels.length)
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'Revenue',
+        data,
+        fill: true,
+        backgroundColor: 'rgba(34,197,94,0.2)',
+        borderColor: 'rgb(34,197,94)',
+        tension: 0.4,
+        pointRadius: 4
+      }
+    ]
+  }
+})
+
+// Chart options
+const revenueChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      callbacks: {
+        label: ctx => `Rs. ${ctx.parsed.y.toLocaleString()}`
+      }
+    }
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      ticks: {
+        callback: value => `Rs. ${value.toLocaleString()}`
+      }
+    }
+  }
+}
+
 </script>

@@ -33,7 +33,7 @@
                             <div class="" v-for="item in electronicVehicle">
                                 <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
                                      :style="{ backgroundColor: getBgColor(item)}">
-                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                    <p class="text-white font-bold text-2xl items-center text-center rounded-full">{{ item.name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="" v-for="item in disabledDriver">
                                 <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
                                      :style="{ backgroundColor: getBgColor(item)}">
-                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                    <p class="text-white font-bold text-2xl items-center text-center rounded-full">{{ item.name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="" v-for="item in booking">
                                 <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
                                      :style="{ backgroundColor: getBgColor(item)}">
-                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                    <p class="text-white font-bold text-2xl items-center text-center rounded-full">{{ item.name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                             <div class="" v-for="item in publics">
                                 <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
                                      :style="{ backgroundColor: getBgColor(item)}">
-                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                    <p class="text-white font-bold text-2xl items-center text-center rounded-full">{{ item.name }}</p>
                                 </div>
                             </div>
                         </div>
