@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-10 px-4 md:px-8">
+  <div class="flex flex-col gap-10 px-4 md:px-8 w-full">
         <h3 class="font-black text-2xl md:text-3xl text-[var(--common-theme)]">Operations</h3>
 
         <!-- Gate Control -->
