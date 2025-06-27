@@ -1,10 +1,15 @@
 @import "tailwindcss";
 
 :root{
-    --common-background : #FFF2E0;
+    --common-background : #ffffff;
     --common-background-two : #e6daca;
+    --common-theme : #1E467C;
+    --common-theme-light : #316cba;
+    --common-theme-two : #FBB03A;
     --button-one : #3b060a;
     --button-two : #62383b;
+
+    --gradient-to-theme: linear-gradient(to right, #3e92ff, #3a81dd, var(--common-theme));
 }
 
 /* 3b060a

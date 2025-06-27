@@ -1,74 +1,89 @@
 <template>
-    <div class="flex flex-col gap-10">
-        <h1 class="font-semibold text-2xl">Dashbord</h1>
-        <!-- section guide -->
-        <div class="flex fle-row border border-gray-300 p-6 rounded-sm w-full justify-center gap-10">
-            <div class="flex flex-col justify-center items-center gap-2">
-                <div class="w-10 h-10 bg-black rounded-sm"></div>
-                <p class="text-xs">Occupide</p>
+  <div class="flex flex-col gap-10 px-4 md:px-8">
+        <h3 class="font-black text-2xl md:text-3xl text-[var(--common-theme)]">Live Map</h3> 
+
+        <div class="flex md:flex-row flex-col gap-10">
+            <!-- section guide -->
+            <div class="flex md:w-1/8 md:flex-col flex-row items-center justify-center gap-6 rounded-xl shadow-md p-6 md:p-10 bg-white">
+                <div class="flex flex-col justify-center items-center gap-2">
+                    <div class="w-10 h-10 rounded-sm" :style="{ backgroundColor: occupideBg }"></div>
+                    <p class="text-xs">Occupied</p>
+                </div>
+                <div class="flex flex-col justify-center items-center gap-2">
+                    <div class="w-10 h-10 rounded-sm" :style="{ backgroundColor: availableBg }"></div>
+                    <p class="text-xs">Available</p>
+                </div>
+                <div class="flex flex-col justify-center items-center gap-2">
+                    <div class="w-10 h-10 rounded-sm" :style="{ backgroundColor: reservedBg }"></div>
+                    <p class="text-xs">Reserved</p>
+                </div>
+                <div class="flex flex-col justify-center items-center gap-2">
+                    <div class="w-10 h-10 rounded-sm" :style="{ backgroundColor: repairBg }"></div>
+                    <p class="text-xs">Repair</p>
+                </div>
             </div>
-            <div class="flex flex-col justify-center items-center gap-2">
-                <div class="w-10 h-10 bg-green-400 rounded-sm"></div>
-                <p class="text-xs">Available</p>
-            </div>
-            <div class="flex flex-col justify-center items-center gap-2">
-                <div class="w-10 h-10 bg-blue-400 rounded-sm"></div>
-                <p class="text-xs">Reserved</p>
-            </div>
-            <div class="flex flex-col justify-center items-center gap-2">
-                <div class="w-10 h-10 bg-red-400 rounded-sm"></div>
-                <p class="text-xs">Sensors out</p>
+
+            <!-- parking lot -->
+            <div class="grid w-7/8 gap-0 bg-gray-100 rounded-xl shadow-md p-1">
+                <div class="grid lg:grid-cols-2 grid-cols-1 gap-2 p-6">
+                    <!-- electronic vehicle section -->
+                    <div class="flex flex-col bg-white items-center gap-4 shadow-lg rounded-sm p-6">
+                        <p class="text-sm font-black uppercase text-gray-500">Section for Electric</p>
+                        <div class="flex md:flex-row flex-col gap-6">
+                            <div class="" v-for="item in electronicVehicle">
+                                <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
+                                     :style="{ backgroundColor: getBgColor(item)}">
+                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- disabled vehicle section -->
+                    <div class="flex flex-col bg-white items-center gap-4 shadow-lg rounded-sm p-6">
+                        <p class="text-sm font-black uppercase text-gray-500">Section for Disabled</p>
+                        <div class="flex md:flex-row flex-col gap-6">
+                            <div class="" v-for="item in disabledDriver">
+                                <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
+                                     :style="{ backgroundColor: getBgColor(item)}">
+                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid gap-2 rounded-xl px-6 pb-6">
+                    <!-- private vehicle section -->
+                    <div class="flex flex-col bg-white items-center gap-4 shadow-lg rounded-sm p-6">
+                        <p class="text-sm font-black uppercase text-gray-500">Section for Private</p>
+                        <div class="flex md:flex-row flex-col gap-6">
+                            <div class="" v-for="item in booking">
+                                <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
+                                     :style="{ backgroundColor: getBgColor(item)}">
+                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- public vehicle section -->
+                    <div class="flex flex-col bg-white items-center gap-4 shadow-lg rounded-sm p-6">
+                        <p class="text-sm font-black uppercase text-gray-500">Section for Public</p>
+                        <div class="flex md:flex-row flex-col gap-6">
+                            <div class="" v-for="item in publics">
+                                <div class="w-15 h-15 flex flex-col justify-center items-center rounded-sm"
+                                     :style="{ backgroundColor: getBgColor(item)}">
+                                    <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- parking lot -->
-        <div class="flex flex-col w-full h-auto justify-center items-center">
-            <div class="grid grid-cols-2 gap-2 items-center justify-center w-fit h-auto">
-                <!-- electronic vehicle section -->
-                <div class="flex flex-col gap-4 border border-gray-400 rounded-sm p-5">
-                    <p class="text-sm font-black uppercase text-gray-500">Electric vehicles</p>
-                    <div class="flex flex-row gap-6">
-                        <div class="" v-for="item in electronicVehicle">
-                            <div :class="{'bg-red-400' : (item.magnometer == false || item.ultrasonic == false), 'bg-green-400' : item.occupide == false && item.availability == true, 'bg-black' : item.occupide == true && item.availability == false, 'bg-blue-400' : item.book == true && item.occupide == false && item.availability == false}" class="w-15 h-15 flex flex-col justify-center items-center rounded-sm">
-                                <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- disabled drivers' vehicles -->
-                <div class="flex flex-col gap-4 border border-gray-400 rounded-sm p-5">
-                    <p class="text-sm font-black uppercase text-gray-500">Disabled Driver</p>
-                    <div class="flex flex-row gap-6">
-                        <div class="" v-for="item in disabledDriver">
-                            <div :class="{'bg-red-400' : (item.magnometer == false || item.ultrasonic == false), 'bg-green-400' : item.occupide == false && item.availability == true, 'bg-black' : item.occupide == true && item.availability == false, 'bg-blue-400' : item.book == true && item.occupide == false && item.availability == false}" class="w-15 h-15 flex flex-col justify-center items-center rounded-sm">
-                                <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- bookable parking slots -->
-                <div class="flex flex-col gap-4 border border-gray-400 rounded-sm p-5 col-span-2">
-                    <p class="text-sm font-black uppercase text-gray-500">Booking slots</p>
-                    <div class="flex flex-row justify-between">
-                        <div class="" v-for="item in booking">
-                            <div :class="{'bg-red-400' : (item.magnometer == false || item.ultrasonic == false), 'bg-green-400' : item.occupide == false && item.availability == true, 'bg-black' : item.occupide == true && item.availability == false, 'bg-blue-400' : item.book == true && item.occupide == false && item.availability == false}" class="w-15 h-15 flex flex-col justify-center items-center rounded-sm">
-                                <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- public parking slots -->
-                <div class="flex flex-col gap-4 border border-gray-400 rounded-sm p-5 col-span-2">
-                    <p class="text-sm font-black uppercase text-gray-500">Public slots</p>
-                    <div class="flex flex-row justify-between">
-                        <div class="" v-for="item in publics">
-                            <div :class="{'bg-red-400' : item.magnometer == false || item.ultrasonic == false, 'bg-green-400' : item.occupide == false, 'bg-black' : item.occupide == true}" class="w-15 h-15 flex flex-col justify-center items-center rounded-sm">
-                                <p class="bg-white w-8 h-6 text-center rounded-full">{{ item.name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <div></div>
     </div> 
 </template>
 
@@ -322,6 +337,18 @@ const electronicVehicle = ref([])
 const disabledDriver = ref([])
 const booking = ref([])
 const publics = ref([])
+
+const occupideBg = ref('#FF1515')
+const availableBg = ref('#48CF58')
+const reservedBg = ref('#D9D9D9')
+const repairBg = ref('#000000')
+
+function getBgColor(item) {
+  if (item.magnometer === false || item.ultrasonic === false) return occupideBg.value
+  if (item.occupide === false) return availableBg.value
+  if (item.occupide === true) return repairBg.value
+  return reservedBg.value // fallback
+}
 
 onMounted(() => {
     for (let i = 0; i < parkingSlot.value.length; i++) {

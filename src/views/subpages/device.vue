@@ -1,51 +1,61 @@
 <template>
-    <div class="flex flex-col gap-10">
-        <h1 class="font-semibold text-2xl">Device management</h1>
-        <!-- gate sensors -->
-        <div class="flex flex-col gap-4 rounded-sm">
-            <h3 class="font-semibold text-lg text-gray-400">Gate sensors</h3>
+  <div class="flex flex-col gap-10 px-4 md:px-8">
+        <h3 class="font-black text-2xl md:text-3xl text-[var(--common-theme)]">Device Management</h3>
+
+        <!-- Gate Sensors -->
+        <div class="flex flex-col gap-6 rounded-xl shadow-md p-6 md:p-10 bg-white">
+            <!-- title -->
+            <div class="flex flex-row justify-between items-center">
+                <h3 class="text-lg md:text-xl font-bold text-gray-800">Gate Sensors</h3>
+            </div>
+            <!-- content -->
             <table class="w-full border-collapse">
-                <thead class="sm:table-header-group hidden bg-gray-100">
-                    <tr class="text-left">
-                        <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Gate</th>
-                        <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Sensor ID</th>
-                        <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Status</th>
-                        <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Bettery status</th>
-                    </tr>
-                </thead>
-                <tbody class="sm:table-row-group flex flex-col gap-4" >
-                    <tr class="sm:table-row flex flex-col sm:border-1 sm:border-b sm:border-gray-200 border-2 border-gray-200 sm:odd:bg-gray-50 sm:even:bg-white bg-gray-50 hover:bg-gray-100 sm:p-0 p-4 sm:rounded-none rounded-md" v-for="item in gateSensors">
-                        <td class="sm:table-cell flex flex-row py-2 pl-6 font-bold text-gray-400 uppercase text-sm">{{ item.sensorName.slice(0,3) == 'opn' ? 'Entry' : 'Exite' }}</td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.sensorName }}</td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.status == true ? 'Ok' : 'Offline' }}</td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.bettery }}<span class="text-xs"> %</span></td>
-                    </tr>
-                </tbody>
+                    <thead class="sm:table-header-group hidden bg-gray-100">
+                        <tr class="text-left">
+                            <th class="min-w-[90px] w-[90px] pl-6 py-2 text-gray-400 uppercase text-sm">Gate</th>
+                            <th class="min-w-[130px] w-[150px] pl-6 py-2 text-gray-400 uppercase text-sm">Sensor ID</th>
+                            <th class="min-w-[130px] w-[150px] pl-6 py-2 text-gray-400 uppercase text-sm">Status</th>
+                            <th class="min-w-[130px] w-[150px] pl-6 py-2 text-gray-400 uppercase text-sm">Batery Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sm:table-row-group flex flex-col gap-4">
+                        <tr class="sm:table-row flex flex-col sm:even:bg-gray-50 sm:odd:bg-white bg-gray-50 hover:bg-gray-100 sm:p-0 p-4 sm:rounded-none rounded-md" v-for="item in gateSensors">
+                            <td class="sm:table-cell flex flex-row py-2 pl-6 font-bold text-gray-400 uppercase text-sm">{{ item.sensorName.slice(0,3) == 'opn' ? 'Entry' : 'Exite' }}</td>
+                            <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.sensorName }}</td>
+                            <td class="sm:table-cell flex flex-row py-2 pl-6"> {{ getAlertIcon(item.status) }} {{ item.status == true ? 'Ok' : 'Offline' }}</td>
+                            <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.bettery }}<span class="text-xs"> % {{ getBatteryStatusEmoji(item.bettery) }}</span></td>
+                        </tr>
+                    </tbody>
             </table>
-        </div>
-        <!-- slot sensors -->
-        <div class="flex flex-col gap-4 rounded-sm">
-            <h3 class="font-semibold text-lg text-gray-400">Slot sensors</h3>
+        </div> 
+
+        <!-- Slot Sensors -->
+        <div class="flex flex-col gap-6 rounded-xl shadow-md p-6 md:p-10 bg-white">
+            <!-- title -->
+            <div class="flex flex-row justify-between items-center">
+                <h3 class="text-lg md:text-xl font-bold text-gray-800">Parking Lot Sensors</h3>
+            </div>
+            <!-- content -->
             <table class="w-full border-collapse">
                 <thead class="sm:table-header-group hidden bg-gray-100">
                     <tr class="text-left">
-                        <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Parking slot</th>
+                        <th class="min-w-[130px] w-[130px] pl-6 py-2 text-gray-400 uppercase text-sm">Parking Slot</th>
                         <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Sensor ID</th>
                         <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Status</th>
                         <th class="min-w-[130px] w-[200px] pl-6 py-2 text-gray-400 uppercase text-sm">Bettery status</th>
                     </tr>
                 </thead>
                 <tbody class="sm:table-row-group flex flex-col gap-4" >
-                    <tr class="sm:table-row flex flex-col sm:border-1 sm:border-b sm:border-gray-200 border-2 border-gray-200 sm:odd:bg-gray-50 sm:even:bg-white bg-gray-50 hover:bg-gray-100 sm:p-0 p-4 sm:rounded-none rounded-md" v-for="item in slotSensors">
+                    <tr class="sm:table-row flex flex-col sm:even:bg-gray-50 sm:odd:bg-white bg-gray-50 hover:bg-gray-100 sm:p-0 p-4 sm:rounded-none rounded-md" v-for="item in slotSensors">
                         <td class="sm:table-cell flex flex-row py-2 pl-6 font-bold text-gray-400 uppercase text-sm">{{ item.sensorName.slice(0,2) }}</td>
                         <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.sensorName }}</td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.status == true ? 'Ok' : 'Offline' }}</td>
-                        <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.bettery }}<span class="text-xs"> %</span></td>
+                        <td class="sm:table-cell flex flex-row py-2 pl-6"> {{ getAlertIcon(item.status) }} {{ item.status == true ? 'Ok' : 'Offline' }} </td>
+                        <td class="sm:table-cell flex flex-row py-2 pl-6">{{ item.bettery }}<span class="text-xs"> % </span></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div> 
+        </div> 
+</div>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
@@ -167,6 +177,27 @@ const sensorData = ref([
         'bettery' : 17
     },
 ])
+
+// status emojis
+function getAlertIcon(status) {
+  if (status === true) {
+    return '✅'; // Online / Ok
+  } else if (status === false) {
+    return '🚫'; // Offline
+  } else {
+    return '⚙️'; // Unknown/Issue
+  }
+}
+
+function getBatteryStatusEmoji(battery) {
+  if (battery === 0) {
+    return '🚨'; // Critical battery
+  } else if (battery > 0 && battery < 20) {
+    return '⚠️'; // Low battery warning
+  } else {
+    return ''; // Battery OK
+  }
+}
 
 // devide sensor data base on usege (gate / slots)
 onMounted(() => {

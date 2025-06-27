@@ -1,62 +1,73 @@
 <template>
-  <div class="flex flex-row w-full h-screen relative">
+  <div class="flex flex-row w-full overflow-x-auto">
     <!-- sidebase -->
-    <div
-      class="flex flex-col gap-10 max-w-[275px] min-w-[250px] w-full items-center py-12 bg-[var(--common-background-two)] drop-shadow-xl sticky left-0 top-0 bottom-0 h-screen"
-    >
+    <div class="flex-1 flex-col bg-[var(--common-theme)] gap-10 max-w-[250px] min-w-[250px] w-[250px] items-center py-12 bg-[var(--common-background-two)] sticky left-0 top-0 bottom-0">
       <!-- header -->
-      <div class="text-center">
-        <h1 class="font-black text-2xl">Admin portal</h1>
-        <p class="text-sm">Smart Parking</p>
+      <div class="flex flex-row justify-center items-end w-full">
+          <img src="@/assets/easyParkLogo.svg" alt="Logo" class="h-30 ml-[-50px]" />
+          <h1 class="text-[var(--common-theme-two)] tracking-wide text-2xl ml-[-60px]" style="font-family: 'Anton', sans-serif;">EASY PARK</h1>
       </div>
       <!-- content -->
-      <div class="flex flex-col w-full gap-1 px-2">
+      <div class="flex flex-col w-full gap-5 px-2 mt-10">
         <button
-          class="rounded-sm border-[#b3a99d] border w-full py-2 hover:bg-[#62383b] active:bg-[#3b060a] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a] text-left pl-6"
-            @click="router.push({ name: 'dashbord' })"
+          class="rounded-sm flex flex-row w-full gap-5 font-medium items-center py-2 text-white text-left pl-10 hover:bg-[#FFFFFF80] active:bg-[var(--common-theme-two)] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a]"
+          @click="router.push({ name: 'dashbord' })"> 
+          <HomeIcon class="h-5 w-5" />
+          Dashboard
+        </button>
+        <button
+        class="rounded-sm  w-full py-2 flex flex-row gap-5 font-medium items-center text-white text-left pl-10 hover:bg-[#FFFFFF80] active:bg-[var(--common-theme-two)] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a]"
+        @click="router.push({ name: 'operation' })"
+        >
+        <Cog6ToothIcon class="h-5 w-5" />
+        Operations
+        </button>
+        <button
+          class="rounded-sm w-full py-2 flex flex-row gap-5 font-medium items-center text-white text-left pl-10 hover:bg-[#FFFFFF80] active:bg-[var(--common-theme-two)] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a]"
+          @click="router.push({ name: 'live' })"
             >
-            Dashbord
-        </button>
-        <button
-          class="rounded-sm border-[#b3a99d] border w-full py-2 hover:bg-[#62383b] active:bg-[#3b060a] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a] text-left pl-6"
-            @click="router.push({ name: 'live' })"
+            <MapIcon class="h-5 w-5" />
+            Live Map
+          </button>
+          <button
+          class="rounded-sm w-full py-2 flex flex-row gap-5 font-medium items-center text-white text-left pl-10 hover:bg-[#FFFFFF80] active:bg-[var(--common-theme-two)] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a]"
+          @click="router.push({ name: 'device' })"
             >
-            Live parking
-        </button>
-        <button
-            class="rounded-sm border-[#b3a99d] border w-full py-2 hover:bg-[#62383b] active:bg-[#3b060a] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a] text-left pl-6"
-            @click="router.push({ name: 'operation' })"
+            <DevicePhoneMobileIcon class="h-5 w-5" />
+            Devices
+          </button>
+          <button
+          class="rounded-sm w-full py-2 flex flex-row gap-5 font-medium items-center text-white text-left pl-10 hover:bg-[#FFFFFF80] active:bg-[var(--common-theme-two)] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a]"
+          @click="router.push({ name: 'eventProcessing' })"
             >
-            Gate contrall
-        </button>
-        <button
-        class="rounded-sm border-[#b3a99d] border w-full py-2 hover:bg-[#62383b] active:bg-[#3b060a] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a] text-left pl-6"
-        @click="router.push({ name: 'device' })"
-          >
-          Device
-        </button>
-        <button
-        class="rounded-sm border-[#b3a99d] border w-full py-2 hover:bg-[#62383b] active:bg-[#3b060a] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a] text-left pl-6"
-        @click="router.push({ name: 'eventprocessing' })"
-          >
-          Event Processing
-        </button>
-        <button
-        class="rounded-sm border-[#b3a99d] border w-full py-2 hover:bg-[#62383b] active:bg-[#3b060a] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a] text-left pl-6"
-        @click="router.push({ name: 'analitics' })"
-          >
-          Analitics
-        </button>
+            <BellAlertIcon class="h-5 w-5" />
+            Event Processing
+          </button>
+          <button
+          class="rounded-sm w-full py-2 flex flex-row gap-5 font-medium items-center text-white text-left pl-10 hover:bg-[#FFFFFF80] active:bg-[var(--common-theme-two)] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a]"
+          @click="router.push({ name: 'analytics' })"
+            >
+            <ChartBarIcon class="h-5 w-5" />
+            Analytics
+          </button>
       </div>
       <!-- footer -->
+       <div class="flex flex-col w-full gap-5 px-2 mt-10">
+        <button
+          class="rounded-sm flex flex-row w-full gap-5 font-medium items-center py-2 text-white text-left pl-10 hover:bg-[#FFFFFF80] active:bg-[var(--common-theme-two)] hover:text-white active:text-white hover:border-[#3b060a] active:border-[#3b060a]"
+          > 
+          <ArrowRightOnRectangleIcon class="h-5 w-5" />
+          Log out
+        </button>
+      </div>
     </div>
     <!-- content page -->
-    <div class="w-full h-screen py-12 px-8">
+    <div class="flex-2 w-full h-screen py-12 px-8">
       <router-view></router-view>
     </div>
   </div>
 </template>
 <script setup>
 import router from '@/router';
-
+import { HomeIcon, Cog6ToothIcon, MapIcon, DevicePhoneMobileIcon, BellAlertIcon, ChartBarIcon, ArrowRightOnRectangleIcon } from '@heroicons/vue/24/solid'
 </script>

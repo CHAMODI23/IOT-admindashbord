@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Login from '@/views/Authontication/login.vue'
 import Otp from '@/views/Authontication/otp.vue'
 import ChangePassword from '@/views/Authontication/changePassword.vue'
-import Analitics from '@/views/subpages/analitics.vue'
+import Analytics from '@/views/subpages/analitics.vue'
 import Dashbord from '@/views/subpages/dashbord.vue'
 import Operation from '@/views/subpages/operation.vue'
 import Device from '@/views/subpages/device.vue'
@@ -19,9 +19,9 @@ const router = createRouter({
       component: HomeView,
       children : [
         {
-          path: 'analitics',
-          name: 'analitics',
-          component: Analitics,
+          path: 'analytics',
+          name: 'analytics',
+          component: Analytics,
         },
         {
           path: 'live',
@@ -44,8 +44,8 @@ const router = createRouter({
           component: Device,
         },
         {
-          path: 'eventprocessing',
-          name: 'eventprocessing',
+          path: 'eventProcessing',
+          name: 'eventProcessing',
           component: EventProcessing,
         },
       ]
