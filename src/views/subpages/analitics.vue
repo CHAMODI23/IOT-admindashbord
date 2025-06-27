@@ -1,7 +1,7 @@
 <template>
   <!-- title -->
   <div class="flex flex-col gap-10 px-4 md:px-8">
-    <h3 class="font-black text-2xl md:text-3xl text-[var(--common-theme)]">Operations</h3>
+    <h3 class="font-black text-2xl md:text-3xl text-[var(--common-theme)]">Analytics</h3>
 
     <div class="flex flex-col gap-6">
         <!-- bar chart - occupancy -->
