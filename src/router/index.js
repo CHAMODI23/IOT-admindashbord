@@ -10,6 +10,7 @@ import Operation from '@/views/subpages/operation.vue'
 import Device from '@/views/subpages/device.vue'
 import EventProcessing from '@/views/subpages/eventProcessing.vue'
 import Liveparking from '@/views/subpages/liveparking.vue'
+import Test from '@/views/test.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,6 +71,11 @@ const router = createRouter({
       path: '/changepassword',
       name: 'changepassword',
       component: ChangePassword,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test,
     },
   ],
 })
